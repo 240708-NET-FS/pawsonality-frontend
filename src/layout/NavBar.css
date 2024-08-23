@@ -1,0 +1,12 @@
+#navbarmain {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  border-bottom: solid 0.1rem;
+}
+
+#rightsectionnav {
+  display: flex;
+  gap: 1rem;
+}
