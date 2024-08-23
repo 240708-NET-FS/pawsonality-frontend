@@ -1,0 +1,9 @@
+#HomePageMainArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+button {
+  margin-bottom: 0.1rem;
+  width: 50%;
+}
