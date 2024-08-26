@@ -1,0 +1,88 @@
+.topContainer {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #10c4a7;
+    height: auto;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    max-width: 30%;
+    min-width: 30%;
+
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+
+    border-radius: 50px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: #0c6d73;
+    box-shadow: -10px -8px 0px #fda909;
+}
+
+.titleContainer {
+    display: flex;
+    flex-direction: column;
+    font-size: 32px;
+    font-weight: bolder;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2.5rem;
+    border-radius: 50px;
+}
+
+.inputBox {
+    box-shadow: inset #0c6d73 0 0 0 2px;
+    border: 0;
+    background: rgb(197, 243, 239);
+    appearance: none;
+    width: 100%;
+    position: relative;
+    border-radius: 50px;
+    line-height: 1.4;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    font-weight: 400;
+    height: 40px;
+    transition: all .2s ease;
+    text-align: center;
+}
+
+.inputBox:hover {
+    box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 2px;
+}
+
+.inputBox:focus {
+    background: #fff;
+    outline: 0;
+    box-shadow: 0 0 0 0 #fff inset, #0c6d73 0 0 0 3px;
+}
+
+.inputButton {
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 12px 24px;
+    border: 0;
+    color: #ffffff;
+    background: #0c6d73;
+    line-height: 1.15;
+    font-size: 16px;
+    border-radius: 50px;
+}
+
+.inputButton:hover {
+    transition: all .1s ease;
+    box-shadow: 0 0 0 0 #fff, 0 0 0 3px #1de9b6;
+}
