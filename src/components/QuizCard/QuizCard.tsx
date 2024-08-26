@@ -1,86 +1,106 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./QuizCard.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaw } from "@fortawesome/free-solid-svg-icons";
 
-export const QuizCard = () => {
 
-    const [selected, setSelection] = useState('');
+interface Option {
+    answerText: string;
+    answerType: string;
+  }
+  
+interface QuestionProps {
+    questionText: string;
+    answer: Option[];
+    onAnswerSelect: (selectedAnimal: string) => void;
+  }
+  
+export const QuizCard = ({ questionText, answer, onAnswerSelect }: QuestionProps) => {
+
+    const [selected, setSelection] = useState<string | null>(null);
 
     const onChangeValue = (event: any) => {
         setSelection(event.target.value);
     }
 
-    const onNext = () => {
-        console.log("next clicked");
-    }
+    useEffect(() => {
+        setSelection(null);
+      }, [questionText]);
+    
+
+    const handleSelect = () => {
+        console.log(selected);
+        if (selected) {
+            onAnswerSelect(selected);
+          }
+      };
     return (
         <div className="topContainer">
       <div className="titleContainer">
-        <p>How do you prefer to spend your free time?</p>
+        <p>{questionText}</p>
       </div>
 
       <div className="inputContainer">
         <label className="custom-radio">
           <input
             type="radio"
-            value="dog"
-            checked={selected === 'dog'}
+            value= {answer[0].answerType}
+            checked={selected === answer[0].answerType}
             onChange={onChangeValue}
           />
           <span className="custom-radio-icon">
-            {selected === 'dog' && <FontAwesomeIcon icon={faPaw} />}
+            {selected === answer[0].answerType && <FontAwesomeIcon icon={faPaw} />}
           </span>
-          Going out with friends, exploring new places, and staying active.
+          {answer[0].answerText}
           <div></div>
         </label>
 
         <label className="custom-radio">
           <input
             type="radio"
-            value="cat"
-            checked={selected === 'cat'}
+            value={answer[1].answerType}
+            checked={selected === answer[1].answerType}
             onChange={onChangeValue}
           />
           <span className="custom-radio-icon">
-            {selected === 'cat' && <FontAwesomeIcon icon={faPaw} />}
+            {selected === answer[1].answerType && <FontAwesomeIcon icon={faPaw} />}
           </span>
-          Lounging in a cozy spot, enjoying some quiet time alone.
+          {answer[1].answerText}
           <div></div>
         </label>
 
         <label className="custom-radio">
           <input
             type="radio"
-            value="bird"
-            checked={selected === 'bird'}
+            value= {answer[2].answerType}
+            checked={selected === answer[2].answerType}
             onChange={onChangeValue}
           />
           <span className="custom-radio-icon">
-            {selected === 'bird' && <FontAwesomeIcon icon={faPaw} />}
+            {selected === answer[2].answerType && <FontAwesomeIcon icon={faPaw} />}
           </span>
-          Soaring through new experiences, whether it’s traveling or trying new hobbies.
+          {answer[2].answerText}
           <div></div>
         </label>
 
         <label className="custom-radio">
           <input
             type="radio"
-            value="snake"
-            checked={selected === 'snake'}
+            value={answer[3].answerType}
+            checked={selected === answer[3].answerType}
             onChange={onChangeValue}
           />
           <span className="custom-radio-icon">
-            {selected === 'snake' && <FontAwesomeIcon icon={faPaw} />}
+            {selected === answer[3].answerType && <FontAwesomeIcon icon={faPaw} />}
           </span>
-          Observing from a distance, planning your next move carefully.
+          {answer[3].answerText}
           <div></div>
         </label>
 
        {selected && <input
                 className={"inputButton"}
                 type="button"
-                onClick={onNext}
+                onClick={ () =>handleSelect()}
                 value={"Next"} />
 
             } 
