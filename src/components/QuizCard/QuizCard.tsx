@@ -5,21 +5,19 @@ import { faPaw } from "@fortawesome/free-solid-svg-icons";
 
 
 interface Option {
-    text: string;
-    animal: string;
+    answerText: string;
+    answerType: string;
   }
   
 interface QuestionProps {
-    question: string;
-    options: Option[];
+    questionText: string;
+    answer: Option[];
     onAnswerSelect: (selectedAnimal: string) => void;
   }
   
-export const QuizCard = ({ question, options, onAnswerSelect }: QuestionProps) => {
+export const QuizCard = ({ questionText, answer, onAnswerSelect }: QuestionProps) => {
 
     const [selected, setSelection] = useState<string | null>(null);
-    const [, forceUpdate] = useState(0);
-    const reloadComponent = () => forceUpdate(n => n + 1);
 
     const onChangeValue = (event: any) => {
         setSelection(event.target.value);
@@ -27,7 +25,7 @@ export const QuizCard = ({ question, options, onAnswerSelect }: QuestionProps) =
 
     useEffect(() => {
         setSelection(null);
-      }, [question]);
+      }, [questionText]);
     
 
     const handleSelect = () => {
@@ -35,68 +33,67 @@ export const QuizCard = ({ question, options, onAnswerSelect }: QuestionProps) =
         if (selected) {
             onAnswerSelect(selected);
           }
-        // reloadComponent();
       };
     return (
         <div className="topContainer">
       <div className="titleContainer">
-        <p>{question}</p>
+        <p>{questionText}</p>
       </div>
 
       <div className="inputContainer">
         <label className="custom-radio">
           <input
             type="radio"
-            value= {options[0].animal}
-            checked={selected === options[0].animal}
+            value= {answer[0].answerType}
+            checked={selected === answer[0].answerType}
             onChange={onChangeValue}
           />
           <span className="custom-radio-icon">
-            {selected === options[0].animal && <FontAwesomeIcon icon={faPaw} />}
+            {selected === answer[0].answerType && <FontAwesomeIcon icon={faPaw} />}
           </span>
-          {options[0].text}
+          {answer[0].answerText}
           <div></div>
         </label>
 
         <label className="custom-radio">
           <input
             type="radio"
-            value={options[1].animal}
-            checked={selected === options[1].animal}
+            value={answer[1].answerType}
+            checked={selected === answer[1].answerType}
             onChange={onChangeValue}
           />
           <span className="custom-radio-icon">
-            {selected === options[1].animal && <FontAwesomeIcon icon={faPaw} />}
+            {selected === answer[1].answerType && <FontAwesomeIcon icon={faPaw} />}
           </span>
-          {options[1].text}
+          {answer[1].answerText}
           <div></div>
         </label>
 
         <label className="custom-radio">
           <input
             type="radio"
-            value= {options[2].animal}
-            checked={selected === options[2].animal}
+            value= {answer[2].answerType}
+            checked={selected === answer[2].answerType}
             onChange={onChangeValue}
           />
           <span className="custom-radio-icon">
-            {selected === options[2].animal && <FontAwesomeIcon icon={faPaw} />}
+            {selected === answer[2].answerType && <FontAwesomeIcon icon={faPaw} />}
           </span>
-          {options[2].text}
+          {answer[2].answerText}
           <div></div>
         </label>
 
         <label className="custom-radio">
           <input
             type="radio"
-            value={options[3].animal}
-            checked={selected === options[3].animal}
+            value={answer[3].answerType}
+            checked={selected === answer[3].answerType}
             onChange={onChangeValue}
           />
           <span className="custom-radio-icon">
-            {selected === options[3].animal && <FontAwesomeIcon icon={faPaw} />}
+            {selected === answer[3].answerType && <FontAwesomeIcon icon={faPaw} />}
           </span>
-          {options[3].text}
+          {answer[3].answerText}
           <div></div>
         </label>
 
