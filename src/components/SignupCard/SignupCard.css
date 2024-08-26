@@ -86,3 +86,35 @@
     transition: all .1s ease;
     box-shadow: 0 0 0 0 #fff, 0 0 0 3px #1de9b6;
 }
+
+/* Divider styling */
+.divider-break {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+
+.divider-break h5 {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Button redirect styling */
+.button-redirect-div a {
+    display: inline-block;
+    padding: 12px 24px;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 50px;
+    text-decoration: none;
+    color: #ffffff;
+    background: #0c6d73; 
+    transition: all 0.2s ease;
+}
+
+.button-redirect-div a:hover {
+    box-shadow: 0 0 0 3px #0c6d73;
+}

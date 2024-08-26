@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./SignupCard.css";
+import { Link } from "react-router-dom";
 
 export const SignupCard = () => {
     const [userName, setUsername] = useState("");
@@ -75,6 +76,15 @@ export const SignupCard = () => {
                     onClick={onSignupClick}
                     value={"Sign Up"}
                 />
+            </div>
+              {/* Divider and Login Button */}
+              <div className="divider-break">
+                <h5>Already have an account?</h5>
+            </div>
+            <div className="button-redirect-div">
+                <Link to="/login">
+                    Sign in to your account
+                </Link>
             </div>
         </div>
     );

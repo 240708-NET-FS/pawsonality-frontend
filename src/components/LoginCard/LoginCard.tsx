@@ -1,5 +1,6 @@
 import { useState } from "react"
 import "./LoginCard.css"
+import { Link } from "react-router-dom";
 
 
 export const LoginCard = () => {
@@ -53,7 +54,15 @@ export const LoginCard = () => {
                 onClick={onLoginClick}
                 value={"Log in"} />
         </div>
-
+           {/* Divider and Signup Button */}
+           <div className="divider-break">
+                <h5>Don't have an account?</h5>
+            </div>
+            <div className="button-redirect-div">
+                <Link to="/signup">
+                    Sign up for an account
+                </Link>
+            </div>
     </div>
     )
 
