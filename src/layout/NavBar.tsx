@@ -18,12 +18,17 @@ const NavBar = () => {
             <section id="rightsectionnav">
                 
                 <p><Link to="/quiz">Quiz</Link></p>
-                <p><Link to="/">Profile</Link></p>
+                {token ? (
+                    <p><Link to="/">Profile</Link></p>
+                ) : (
+                    <p></p>
+                )}
                 {token ? (
                     <button onClick={logout}>Logout</button>
                 ) : (
                     <p><Link to="/login">Login</Link></p>
                 )}
+                
                 
             </section>
         </div>
