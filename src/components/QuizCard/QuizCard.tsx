@@ -1,86 +1,109 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./QuizCard.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaw } from "@fortawesome/free-solid-svg-icons";
 
-export const QuizCard = () => {
 
-    const [selected, setSelection] = useState('');
+interface Option {
+    text: string;
+    animal: string;
+  }
+  
+interface QuestionProps {
+    question: string;
+    options: Option[];
+    onAnswerSelect: (selectedAnimal: string) => void;
+  }
+  
+export const QuizCard = ({ question, options, onAnswerSelect }: QuestionProps) => {
+
+    const [selected, setSelection] = useState<string | null>(null);
+    const [, forceUpdate] = useState(0);
+    const reloadComponent = () => forceUpdate(n => n + 1);
 
     const onChangeValue = (event: any) => {
         setSelection(event.target.value);
     }
 
-    const onNext = () => {
-        console.log("next clicked");
-    }
+    useEffect(() => {
+        setSelection(null);
+      }, [question]);
+    
+
+    const handleSelect = () => {
+        console.log(selected);
+        if (selected) {
+            onAnswerSelect(selected);
+          }
+        // reloadComponent();
+      };
     return (
         <div className="topContainer">
       <div className="titleContainer">
-        <p>How do you prefer to spend your free time?</p>
+        <p>{question}</p>
       </div>
 
       <div className="inputContainer">
         <label className="custom-radio">
           <input
             type="radio"
-            value="dog"
-            checked={selected === 'dog'}
+            value= {options[0].animal}
+            checked={selected === options[0].animal}
             onChange={onChangeValue}
           />
           <span className="custom-radio-icon">
-            {selected === 'dog' && <FontAwesomeIcon icon={faPaw} />}
+            {selected === options[0].animal && <FontAwesomeIcon icon={faPaw} />}
           </span>
-          Going out with friends, exploring new places, and staying active.
+          {options[0].text}
           <div></div>
         </label>
 
         <label className="custom-radio">
           <input
             type="radio"
-            value="cat"
-            checked={selected === 'cat'}
+            value={options[1].animal}
+            checked={selected === options[1].animal}
             onChange={onChangeValue}
           />
           <span className="custom-radio-icon">
-            {selected === 'cat' && <FontAwesomeIcon icon={faPaw} />}
+            {selected === options[1].animal && <FontAwesomeIcon icon={faPaw} />}
           </span>
-          Lounging in a cozy spot, enjoying some quiet time alone.
+          {options[1].text}
           <div></div>
         </label>
 
         <label className="custom-radio">
           <input
             type="radio"
-            value="bird"
-            checked={selected === 'bird'}
+            value= {options[2].animal}
+            checked={selected === options[2].animal}
             onChange={onChangeValue}
           />
           <span className="custom-radio-icon">
-            {selected === 'bird' && <FontAwesomeIcon icon={faPaw} />}
+            {selected === options[2].animal && <FontAwesomeIcon icon={faPaw} />}
           </span>
-          Soaring through new experiences, whether it’s traveling or trying new hobbies.
+          {options[2].text}
           <div></div>
         </label>
 
         <label className="custom-radio">
           <input
             type="radio"
-            value="snake"
-            checked={selected === 'snake'}
+            value={options[3].animal}
+            checked={selected === options[3].animal}
             onChange={onChangeValue}
           />
           <span className="custom-radio-icon">
-            {selected === 'snake' && <FontAwesomeIcon icon={faPaw} />}
+            {selected === options[3].animal && <FontAwesomeIcon icon={faPaw} />}
           </span>
-          Observing from a distance, planning your next move carefully.
+          {options[3].text}
           <div></div>
         </label>
 
        {selected && <input
                 className={"inputButton"}
                 type="button"
-                onClick={onNext}
+                onClick={ () =>handleSelect()}
                 value={"Next"} />
 
             } 
