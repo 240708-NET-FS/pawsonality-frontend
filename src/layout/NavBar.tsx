@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
 import "./NavBar.css"
+import { useNavigate } from "react-router-dom";
 
 
 const NavBar = () => {
     const token = localStorage.getItem('token')
+    const navigate = useNavigate()
     
     const logout =() => {
         localStorage.clear()
+        window.location.reload()
+        navigate("/");
     }
 
     
@@ -19,7 +23,7 @@ const NavBar = () => {
                 
                 <p><Link to="/quiz">Quiz</Link></p>
                 {token ? (
-                    <p><Link to="/">Profile</Link></p>
+                    <p><Link to="/profile">Profile</Link></p>
                 ) : (
                     <p></p>
                 )}
