@@ -1,23 +1,50 @@
 import { useState } from "react"
 import "./LoginCard.css"
-import { Link } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 
 export const LoginCard = () => {
     const [userName, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const onLoginClick = () => {
-        fetch ("", {
+        fetch ("https://pawsonality-gsadcuahcpb6bwd8.eastus-01.azurewebsites.net/login", {
             method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                'Access-Control-Allow-Methods': '*',
+            },
             body: JSON.stringify({
-                username: userName,
+                email: userName,
                 password: password
             })
         }
-    ).then((response: any) => response.json())
+    ).then((response: any) => 
+    {
+        if (response.status === 200) {
+            return response.json();
+            
+        }
+        else {
+            alert("Invalid username or password")
+            return null;
+        }
+    }
+    )
     .then((result: any) => {
-        console.log(result);
+        
+        if (result !== null) {
+            localStorage.setItem("username", userName);
+            localStorage.setItem("token", result.accessToken);
+            navigate("/");
+            window.location.reload()
+        }
+        
+    }).catch((error: any) => {
+        alert(error);
     });
     }
 

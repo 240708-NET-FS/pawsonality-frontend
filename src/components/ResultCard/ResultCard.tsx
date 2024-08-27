@@ -5,8 +5,8 @@ function ResultCard({ result }: any) {
 
     return (
         <div id="resultCard">
-            <p>{result.timestamp}</p>
-            <p>{result.result}</p>
+            <p>{result.timeStamp}</p>
+            <p>{result.resultValue}</p>
         </div>
     )
 }
