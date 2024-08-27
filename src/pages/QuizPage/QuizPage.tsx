@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { QuizCard } from "../../components/QuizCard/QuizCard"
 import QuestionsDTO from "../../models/questions";
 import { ResultsCard } from "../../components/ResultsCard/ResultsCard";
+import { useNavigate } from "react-router-dom";
 const QuizPage = () => {
+
+    const navigate = useNavigate();
 
     const [questions, setQuestions] = useState<QuestionsDTO>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -10,16 +13,53 @@ const QuizPage = () => {
     const [quizComplete, setQuizComplete] = useState(false);
 
 
-    const fetchQuestions = async () => {
-        try {
-            const response = await fetch('http://pawsonality-gsadcuahcpb6bwd8.eastus-01.azurewebsites.net/api/questions');
-            const data: QuestionsDTO = await response.json();
+
+    const fetchQuestions = (): void => {
+        fetch('http://pawsonality-gsadcuahcpb6bwd8.eastus-01.azurewebsites.net/api/questions')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then((data: QuestionsDTO) => {
             setQuestions(data);
             setAnswers(new Array(data.length).fill(''));
             console.log(data);
-        } catch (error) {
+          })
+          .catch(error => {
             console.error('Error fetching questions:', error);
-        }
+          });
+      };
+
+    const postResult = (resultValue: string, userId: string): void => {
+        const url = 'http://pawsonality-gsadcuahcpb6bwd8.eastus-01.azurewebsites.net/api/results';
+
+        const body = {
+            timeStamp: new Date().toISOString(),
+            resultValue: resultValue,
+            userId: userId
+        };
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     };
 
     useEffect(() => {
@@ -30,6 +70,7 @@ const QuizPage = () => {
         setQuizComplete(false);
         setCurrentQuestionIndex(0);
         setAnswers([]);
+        navigate('/');
     };
 
     const handleAnswerSelect = (selectedAnimal: string) => {
@@ -40,7 +81,7 @@ const QuizPage = () => {
         if (currentQuestionIndex < questions.length - 1) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
         } else {
-            setQuizComplete(true); 
+            setQuizComplete(true);
         }
     };
 
@@ -50,13 +91,15 @@ const QuizPage = () => {
 
     if (quizComplete) {
         const mostSelectedAnimal = answers.reduce(
-          (prev, curr, index, arr) =>
-            arr.filter((item) => item === curr).length >
-            arr.filter((item) => item === prev).length
-              ? curr
-              : prev,
-          answers[0]
+            (prev, curr, index, arr) =>
+                arr.filter((item) => item === curr).length >
+                    arr.filter((item) => item === prev).length
+                    ? curr
+                    : prev,
+            answers[0]
         );
+
+        postResult(mostSelectedAnimal,"someuser" );
 
         return <ResultsCard animal={mostSelectedAnimal} onFinish={handleFinishQuiz} />;
     }
