@@ -1,4 +1,4 @@
-
+import "./ProfilePage.css"
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -61,18 +61,22 @@ const ProfilePage = () => {
       return (
         <div>
             <h1>Welcome to your profile page!</h1>
-          {token ? (
-            results.length > 0 ? (
-              results.map((result) => (
-                <ResultCard key={result.resultID} result={result} />
-              ))
-              
+            <h2>Here are your results:</h2>
+          
+          <div id="resultContainer">
+            {token ? (
+              results.length > 0 ? (
+                results.map((result) => (
+                  <ResultCard key={result.resultID} result={result} />
+                ))
+                
+              ) : (
+                <p>No Results For User. Please Take A Quiz</p>
+              )
             ) : (
-              <p>No Results For User. Please Take A Quiz</p>
-            )
-          ) : (
-            <p>Please Log In To See Your Results</p>
-          )}
+              <p>Please Log In To See Your Results</p>
+            )}
+          </div>
             {token ? (
                 <button>
                     <Link to ="/quiz">To Quiz!</Link>
