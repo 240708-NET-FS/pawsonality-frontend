@@ -11,7 +11,8 @@ const QuizPage = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState<string[]>([]);
     const [quizComplete, setQuizComplete] = useState(false);
-
+    
+    const token = localStorage.getItem('token');
     const username = localStorage.getItem("username");
     
     let userId = "";
@@ -70,8 +71,12 @@ const QuizPage = () => {
         fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
-            },
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                'Access-Control-Allow-Methods': '*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+          },
             body: JSON.stringify(body)
         })
             .then(response => {
