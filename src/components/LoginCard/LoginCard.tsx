@@ -1,6 +1,6 @@
 import { useState } from "react"
 import "./LoginCard.css"
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export const LoginCard = () => {

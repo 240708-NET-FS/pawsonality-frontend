@@ -117,7 +117,7 @@ const QuizPage = () => {
 
     if (quizComplete) {
         const mostSelectedAnimal = answers.reduce(
-            (prev, curr, index, arr) =>
+            (prev, curr, _index, arr) =>
                 arr.filter((item) => item === curr).length >
                     arr.filter((item) => item === prev).length
                     ? curr
