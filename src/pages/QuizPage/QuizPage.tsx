@@ -11,11 +11,11 @@ const QuizPage = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState<string[]>([]);
     const [quizComplete, setQuizComplete] = useState(false);
-    
+
     const token = localStorage.getItem('token');
     const username = localStorage.getItem("username");
     
-    let userId = "";
+    const [userId, setUserId] = useState("");
 
     if (username) {
         console.log(`Username retrieved: ${username}`);
@@ -28,7 +28,7 @@ const QuizPage = () => {
             })
             .then(data => {
                 // Step 3: Extract the "id" from the response body
-                userId = data.id;
+                setUserId(data.userId)
                 console.log('User ID:', userId);
             })
             .catch(error => {
