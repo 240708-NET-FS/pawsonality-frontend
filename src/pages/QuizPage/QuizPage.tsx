@@ -1,43 +1,61 @@
 import { useEffect, useState } from "react";
-import { QuizCard } from "../../components/QuizCard/QuizCard"
+import { QuizCard } from "../../components/QuizCard/QuizCard";
 import QuestionsDTO from "../../models/questions";
 import { ResultsCard } from "../../components/ResultsCard/ResultsCard";
 import { useNavigate } from "react-router-dom";
+
 const QuizPage = () => {
-
     const navigate = useNavigate();
-
     const [questions, setQuestions] = useState<QuestionsDTO>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState<string[]>([]);
     const [quizComplete, setQuizComplete] = useState(false);
-
+    const [userId, setUserId] = useState("");
+    
     const token = localStorage.getItem('token');
     const username = localStorage.getItem("username");
-    
-    const [userId, setUserId] = useState("");
 
-    if (username) {
-        console.log(`Username retrieved: ${username}`);
-        fetch(`https://pawsonality-gsadcuahcpb6bwd8.eastus-01.azurewebsites.net/api/User/${username}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json(); // Parse the response as JSON
-            })
-            .then(data => {
-                // Step 3: Extract the "id" from the response body
-                setUserId(data.userId)
-                console.log('User ID:', userId);
-            })
-            .catch(error => {
-                console.error('Error fetching user data:', error);
-            });
-    } else {
-        console.log("No username found in localStorage.");
-    }
+    // Fetch user ID if username exists
+    useEffect(() => {
+        if (username) {
+            fetch(`https://pawsonality-gsadcuahcpb6bwd8.eastus-01.azurewebsites.net/api/User/${username}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    setUserId(data.id);
+                })
+                .catch(error => {
+                    console.error('Error fetching user data:', error);
+                });
+        } else {
+            console.log("No username found in localStorage.");
+        }
+    }, [username]);  // This effect will run once on component mount or when `username` changes
 
+    // Fetch questions on mount
+    useEffect(() => {
+        fetchQuestions();
+    }, []);
+
+    // Post result once quiz is complete and userId is available
+    useEffect(() => {
+        if (quizComplete) {
+            const mostSelectedAnimal = answers.reduce(
+                (prev, curr, _index, arr) =>
+                    arr.filter((item) => item === curr).length >
+                    arr.filter((item) => item === prev).length
+                        ? curr
+                        : prev,
+                answers[0]
+            );
+            
+            postResult(mostSelectedAnimal, userId);
+        }
+    }, [quizComplete]); // This effect runs when `quizComplete` or `userId` changes
 
     const fetchQuestions = (): void => {
         fetch('https://pawsonality-gsadcuahcpb6bwd8.eastus-01.azurewebsites.net/api/questions')
@@ -57,8 +75,6 @@ const QuizPage = () => {
             });
     };
 
-
-
     const postResult = (resultValue: string, userId: string): void => {
         const url = 'https://pawsonality-gsadcuahcpb6bwd8.eastus-01.azurewebsites.net/api/results';
 
@@ -76,7 +92,7 @@ const QuizPage = () => {
                 'Access-Control-Allow-Methods': '*',
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
-          },
+            },
             body: JSON.stringify(body)
         })
             .then(response => {
@@ -92,10 +108,6 @@ const QuizPage = () => {
                 console.error('Error:', error);
             });
     };
-
-    useEffect(() => {
-        fetchQuestions();
-    }, []);
 
     const handleFinishQuiz = () => {
         setQuizComplete(false);
@@ -121,22 +133,8 @@ const QuizPage = () => {
     }
 
     if (quizComplete) {
-        const mostSelectedAnimal = answers.reduce(
-            (prev, curr, _index, arr) =>
-                arr.filter((item) => item === curr).length >
-                    arr.filter((item) => item === prev).length
-                    ? curr
-                    : prev,
-            answers[0]
-        );
-
-        postResult(mostSelectedAnimal, userId);
-
-        return <ResultsCard animal={mostSelectedAnimal} onFinish={handleFinishQuiz} />;
+        return <ResultsCard animal={answers[currentQuestionIndex]} onFinish={handleFinishQuiz} />;
     }
-
-
-
 
     return (
         <div>
@@ -146,7 +144,7 @@ const QuizPage = () => {
                 onAnswerSelect={handleAnswerSelect}
             />
         </div>
-    )
+    );
 }
 
 export default QuizPage;
