@@ -12,9 +12,10 @@ const QuizPage = () => {
     const [answers, setAnswers] = useState<string[]>([]);
     const [quizComplete, setQuizComplete] = useState(false);
 
+    const token = localStorage.getItem('token');
     const username = localStorage.getItem("username");
     
-    let userId = "";
+    const [userId, setUserId] = useState("");
 
     if (username) {
         console.log(`Username retrieved: ${username}`);
@@ -27,7 +28,7 @@ const QuizPage = () => {
             })
             .then(data => {
                 // Step 3: Extract the "id" from the response body
-                userId = data.id;
+                setUserId(data.userId)
                 console.log('User ID:', userId);
             })
             .catch(error => {
@@ -70,8 +71,12 @@ const QuizPage = () => {
         fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
-            },
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                'Access-Control-Allow-Methods': '*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+          },
             body: JSON.stringify(body)
         })
             .then(response => {
