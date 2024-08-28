@@ -18,7 +18,7 @@ const QuizPage = () => {
 
     if (username) {
         console.log(`Username retrieved: ${username}`);
-        fetch(`http://pawsonality-gsadcuahcpb6bwd8.eastus-01.azurewebsites.net/api/User/${username}`)
+        fetch(`https://pawsonality-gsadcuahcpb6bwd8.eastus-01.azurewebsites.net/api/User/${username}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -39,7 +39,7 @@ const QuizPage = () => {
 
 
     const fetchQuestions = (): void => {
-        fetch('http://pawsonality-gsadcuahcpb6bwd8.eastus-01.azurewebsites.net/api/questions')
+        fetch('https://pawsonality-gsadcuahcpb6bwd8.eastus-01.azurewebsites.net/api/questions')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -59,7 +59,7 @@ const QuizPage = () => {
 
 
     const postResult = (resultValue: string, userId: string): void => {
-        const url = 'http://pawsonality-gsadcuahcpb6bwd8.eastus-01.azurewebsites.net/api/results';
+        const url = 'https://pawsonality-gsadcuahcpb6bwd8.eastus-01.azurewebsites.net/api/results';
 
         const body = {
             timeStamp: new Date().toISOString(),
