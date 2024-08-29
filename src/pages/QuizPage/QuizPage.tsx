@@ -15,6 +15,23 @@ const QuizPage = () => {
     const token = localStorage.getItem('token');
     const username = localStorage.getItem("username");
 
+    const getMostCommonAnimal = (animals: string[]): string => {
+        const animalCounts: Record<string, number> = {};
+      
+        animals.forEach(animal => {
+          animalCounts[animal] = (animalCounts[animal] || 0) + 1;
+        });
+      
+        const maxCount = Math.max(...Object.values(animalCounts));
+      
+        const mostCommonAnimals = Object.keys(animalCounts).filter(
+          animal => animalCounts[animal] === maxCount
+        );
+      
+        const randomIndex = Math.floor(Math.random() * mostCommonAnimals.length);
+        return mostCommonAnimals[randomIndex];
+      };
+      
     // Fetch user ID if username exists
     useEffect(() => {
         if (username) {
@@ -44,14 +61,7 @@ const QuizPage = () => {
     // Post result once quiz is complete and userId is available
     useEffect(() => {
         if (quizComplete) {
-            const mostSelectedAnimal = answers.reduce(
-                (prev, curr, _index, arr) =>
-                    arr.filter((item) => item === curr).length >
-                    arr.filter((item) => item === prev).length
-                        ? curr
-                        : prev,
-                answers[0]
-            );
+            const mostSelectedAnimal = getMostCommonAnimal(answers);
             
             postResult(mostSelectedAnimal, userId);
         }
