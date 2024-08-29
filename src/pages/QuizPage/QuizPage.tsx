@@ -11,6 +11,7 @@ const QuizPage = () => {
     const [answers, setAnswers] = useState<string[]>([]);
     const [quizComplete, setQuizComplete] = useState(false);
     const [userId, setUserId] = useState("");
+    const [topChoice, setTopChoice] = useState("");
     
     const token = localStorage.getItem('token');
     const username = localStorage.getItem("username");
@@ -61,9 +62,9 @@ const QuizPage = () => {
     // Post result once quiz is complete and userId is available
     useEffect(() => {
         if (quizComplete) {
-            const mostSelectedAnimal = getMostCommonAnimal(answers);
-            
-            postResult(mostSelectedAnimal, userId);
+          
+            setTopChoice(getMostCommonAnimal(answers));
+            postResult(topChoice, userId);
         }
     }, [quizComplete]); // This effect runs when `quizComplete` or `userId` changes
 
@@ -143,7 +144,7 @@ const QuizPage = () => {
     }
 
     if (quizComplete) {
-        return <ResultsCard animal={answers[currentQuestionIndex]} onFinish={handleFinishQuiz} />;
+        return <ResultsCard animal={topChoice} onFinish={handleFinishQuiz} />;
     }
 
     return (
