@@ -28,7 +28,7 @@ const NavBar = () => {
                     <p></p>
                 )}
                 {token ? (
-                    <button onClick={logout}>Logout</button>
+                    <p className="logoutButton" onClick={logout}>Logout</p>
                 ) : (
                     <p><Link to="/login">Login</Link></p>
                 )}

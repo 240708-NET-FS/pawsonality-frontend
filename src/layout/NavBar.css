@@ -11,3 +11,18 @@
   gap: 1rem;
   margin-left: 1rem;
 }
+
+.logoutButton {
+  background-color: transparent;
+  color: #646cff;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.logoutButton:hover {
+  color: #535bf2;
+}
+.logout-button:focus {
+  outline: none;
+}
