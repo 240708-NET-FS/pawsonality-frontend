@@ -14,7 +14,7 @@ const AboutPawsonality = () => {
                 <h3>Below you will find an overview of the process:</h3>
                 <div className="aboutSection">
                     <section className="leftAboutSection">
-                        <p>First, users will be asked to either create an account or login</p>
+                        <p>First, users will be asked to either create an account or login.</p>
                     </section>
                     <section className="rightAboutSection">
                         <img className="aboutImage" src="https://res.cloudinary.com/dzpne110u/image/upload/v1724946168/Project3Revature/loginimage.jpg"/>
@@ -38,7 +38,7 @@ const AboutPawsonality = () => {
                 </div>
                 <div className="aboutSection">
                     <section className="leftAboutSection">
-                        <p>After completing their quiz, users can go their profile page and see a history of the quizes they have taken</p>
+                        <p>After completing their quiz, users can go their profile page and see a history of the quizes they have taken.</p>
                     </section>
                     <section className="rightAboutSection">
                         <img className="aboutImage" src="https://res.cloudinary.com/dzpne110u/image/upload/v1724946973/Project3Revature/profilepage.jpg"/>

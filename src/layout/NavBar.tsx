@@ -17,6 +17,9 @@ const NavBar = () => {
     return (
         <div id="navbarmain">
             <section id="leftsectionnav">
+            <div id="logoHolder">
+                <img id="theLogo"src="https://res.cloudinary.com/dzpne110u/image/upload/v1724956671/Project3Revature/pawsonalitylogo_wekl7y.webp"/>
+            </div>
             <p><Link to="/">Home</Link></p>
             </section>
             <section id="rightsectionnav">
@@ -28,7 +31,7 @@ const NavBar = () => {
                     <p></p>
                 )}
                 {token ? (
-                    <button onClick={logout}>Logout</button>
+                    <p className="logoutButton" onClick={logout}>Logout</p>
                 ) : (
                     <p><Link to="/login">Login</Link></p>
                 )}
