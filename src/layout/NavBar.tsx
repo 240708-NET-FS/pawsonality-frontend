@@ -20,8 +20,8 @@ const NavBar = () => {
             <p><Link to="/">Home</Link></p>
             </section>
             <section id="rightsectionnav">
-                
-                <p><Link to="/quiz">Quiz</Link></p>
+                <p><Link to="/about">About</Link></p>
+                { token ?  <p><Link to="/quiz">Quiz</Link></p> : <p></p>} 
                 {token ? (
                     <p><Link to="/profile">Profile</Link></p>
                 ) : (
